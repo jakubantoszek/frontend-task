@@ -1,0 +1,20 @@
+#list-of-articles{
+    margin: 20px 70px;
+}
+
+.article-panel{
+    margin: 30px 0px;
+    border: 3px solid rgb(0, 0, 0);
+    padding: 10px 15px;
+}
+
+.article-header{
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 120%;
+}
+
+.info{
+    font-size: 90%;
+    margin-bottom: 5px;
+}
