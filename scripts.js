@@ -2,11 +2,11 @@
 var x = 15;
 
 function startup(){
-    get_list_of_articles();
-    show_no_of_articles();
+    getListOfArticles();
+    showNoOfArticles();
 }
 
-function get_list_of_articles(){
+function getListOfArticles(){
     var val = document.getElementById('num').value;
     if(val != null && val != "")
         x = val;
@@ -14,18 +14,19 @@ function get_list_of_articles(){
     fetch('https://api.spaceflightnewsapi.net/v3/articles?_limit=' + x).then(function (response) {
         return response.json();
     }).then(function (data){
-        show_articles(data, x);
-        show_no_of_articles();    
+        showArticles(data, x);
+        showNoOfArticles();    
     }).catch(function (err) {
         console.warn('Error.', err);
     });
 }
 
-function show_articles(data, x){
+function showArticles(data, x){
     var list = document.getElementById('list-of-articles');
     list.innerHTML = "";
 
     for(var i = 0; i < x; i++){
+        // informations about article
         var article = document.createElement('div');
         article.setAttribute('class', 'article-panel');
         
@@ -45,22 +46,24 @@ function show_articles(data, x){
         var buttons = document.createElement('div');
         buttons.setAttribute('class', 'buttons');
 
-        var read_but = document.createElement('button');
-        read_but.setAttribute('class', 'read-button');
-        read_but.innerHTML = "Read article";
+        var readBut = document.createElement('button');
+        readBut.setAttribute('class', 'read-button');
+        readBut.innerHTML = "Read article";
 
-        var read_link = document.createElement('a');
-        read_link.setAttribute('href', data[i]['url']);
-        read_link.setAttribute('target', '_blank');
+        var readLink = document.createElement('a');
+        readLink.setAttribute('href', data[i]['url']);
+        readLink.setAttribute('target', '_blank');
 
-        var add_to_lib = document.createElement('button');
-        add_to_lib.setAttribute('class', 'add-to-library');
-        add_to_lib.innerHTML = "Add to library";
+        var addToLib = document.createElement('button');
+        addToLib.setAttribute('class', 'add-to-library');
+        var onclickFunc = 'saveToLibrary(' + data[i]['id'] + ')';
+        addToLib.setAttribute('onclick', onclickFunc);
+        addToLib.innerHTML = "Add to library";
 
         // add articles to site
-        read_link.appendChild(read_but);
-        buttons.appendChild(read_link);
-        buttons.appendChild(add_to_lib);
+        readLink.appendChild(readBut);
+        buttons.appendChild(readLink);
+        buttons.appendChild(addToLib);
 
         article.append(header);
         article.append(info);
@@ -70,14 +73,28 @@ function show_articles(data, x){
     }
 }
 
-function show_no_of_articles(){
-    var articles_header = document.getElementById('total');
+function showNoOfArticles(){
+    var articlesHeader = document.getElementById('total');
 
     fetch('https://api.spaceflightnewsapi.net/v3/articles/count').then(function (response){
         return response.json();
     }).then(function (data){
-        articles_header.innerHTML = "Fetched articles: " + x + "/" + data;
+        articlesHeader.innerHTML = "Fetched articles: " + x + "/" + data;
     }).catch(function (err){
         console.warn('Error.', err);
     });
+}
+
+function saveToLibrary(id){
+    if (localStorage.getItem("saved") === null) {
+        var savedArticles = [id];
+        localStorage.setItem("saved", JSON.stringify(savedArticles));
+        console.log(savedArticles);
+    }
+    else{
+        var savedArticles = JSON.parse(localStorage.getItem("saved"));
+        savedArticles.push(id);
+        localStorage.setItem("saved", JSON.stringify(savedArticles));
+        console.log(savedArticles);
+    }
 }

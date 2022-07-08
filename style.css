@@ -1,3 +1,31 @@
+body{
+    margin:0;
+}
+
+header{
+    width:100%;
+    background-color:deepskyblue;
+    color:rgb(255, 253, 253);
+    height: 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.site{
+    float: left;
+    margin-left: 4%;
+}
+
+a{
+    text-decoration: none;
+    color:rgb(255, 253, 253);
+}
+
+#total{
+    float: right;
+    margin-right: 4%;
+}
+
 #list-of-articles{
     margin: 20px 70px;
 }
