@@ -41,9 +41,31 @@ function show_articles(data, x){
         summary.setAttribute('class', 'summary');
         summary.innerHTML = data[i]['summary'];
 
+        // create buttons
+        var buttons = document.createElement('div');
+        buttons.setAttribute('class', 'buttons');
+
+        var read_but = document.createElement('button');
+        read_but.setAttribute('class', 'read-button');
+        read_but.innerHTML = "Read article";
+
+        var read_link = document.createElement('a');
+        read_link.setAttribute('href', data[i]['url']);
+        read_link.setAttribute('target', '_blank');
+
+        var add_to_lib = document.createElement('button');
+        add_to_lib.setAttribute('class', 'add-to-library');
+        add_to_lib.innerHTML = "Add to library";
+
+        // add articles to site
+        read_link.appendChild(read_but);
+        buttons.appendChild(read_link);
+        buttons.appendChild(add_to_lib);
+
         article.append(header);
         article.append(info);
         article.append(summary);
+        article.append(buttons);
         list.append(article);
     }
 }

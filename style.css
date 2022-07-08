@@ -18,3 +18,25 @@
     font-size: 90%;
     margin-bottom: 5px;
 }
+
+.buttons{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.read-button{
+    margin-right: 30px;
+    color: white;
+    background-color: rgb(81, 81, 226);
+    height: 30px;
+    cursor: pointer;
+}
+
+.read-button:hover{
+    background-color: rgb(71, 71, 216);
+}
+
+.add-to-library{
+    height: 30px;
+    cursor: pointer;
+}
