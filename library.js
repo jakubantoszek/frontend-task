@@ -1,43 +1,55 @@
-var objectsArray = [];
+var dataArray = [];
 
-class Article{
-    constructor(data){
-        this.id = data['id'];
-        this.publishedAt = data['publishedAt'];
-        this.title = data['title'];
+function libraryStartup(){
+    dataArray = [];
+    fetchData();
+    showLibrary();
+
+    console.log(dataArray.length);
+}
+
+async function fetchData(){
+    var savedArticles = JSON.parse(localStorage.getItem("saved"));
+    var requests = [];
+
+    if(savedArticles.length != 0){
+        const request = new XMLHttpRequest();
+
+        request.addEventListener("load", e => {
+            if (request.status === 200) {
+                dataArray.push(JSON.parse(request.response));
+            }
+        });
+
+        request.addEventListener("error", e => {
+            alert("Error");
+        });
+
+        request.open("GET", 'https://api.spaceflightnewsapi.net/v3/articles/' + 13000, false);
+        request.send();
     }
 }
 
-function libraryStartup(){
-    showLibrary(1);
+async function addToArray(data){
+    dataArray.push(data['id']);
 }
 
-function showLibrary(callInfo){
+function showLibrary(){
     var list = document.getElementById('list-of-articles');
     list.innerHTML = "";
-    var savedArticles = JSON.parse(localStorage.getItem("saved"));
+    
 
-    if(savedArticles.length == 0){
+    if(dataArray.length < 10){
         var empty = document.createElement('div');
         empty.setAttribute('id', 'empty');
         empty.innerHTML = "You didn't have any articles in the library.";
 
         document.body.appendChild(empty);
     }
-    else{
-        savedArticles.forEach(id=> {
-            fetch('https://api.spaceflightnewsapi.net/v3/articles/' + id).then(function (response) {
-                return response.json();
-            }).then(function (data){
-                showArticle(data, list);
-                
-                if(callInfo == 1) // called by libraryStartup
-                    objectsArray.push(new Article(data));
-            }).catch(function (err) {
-                console.warn('Error.', err);
-            });
+    else dataArray.forEach(element=> {
+            showArticle(element, list);
         });
-    }
+    
 }
 
 function showArticle(data, list){
@@ -81,6 +93,20 @@ function showArticle(data, list){
     article.append(summary);
     article.append(buttons);
     list.append(article);
+}
+
+function createObjectsArray(){
+    var savedArticles = JSON.parse(localStorage.getItem("saved"));
+    
+    savedArticles.forEach(id=> {
+        fetch('https://api.spaceflightnewsapi.net/v3/articles/' + id).then(function (response) {
+            return response.json();
+        }).then(function (data){
+            showArticle(data, list);
+        }).catch(function (err) {
+            console.warn('Error.', err);
+        });
+    });
 }
 
 function addButton(id){
@@ -165,6 +191,12 @@ function removeFromLibrary(id, lib){
 }
 
 function sortArticles(){
-    sorting = document.getElementById('sorting').value;
-    showLibrary();
+    var choice = document.getElementById('sorting').value;
+    switch(choice){
+        case 'pa':
+            break;
+        default:
+            console.log("Sorry, an error occurs");
+            break;
+    }
 }
