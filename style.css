@@ -53,7 +53,6 @@ a{
 }
 
 .read-button{
-    margin-right: 30px;
     color: white;
     background-color: rgb(81, 81, 226);
     height: 30px;
@@ -74,4 +73,12 @@ a{
     cursor: pointer;
     background-color: rgb(243, 82, 82);
     color: white;
+}
+
+a.button{
+    margin-right: 30px;
+}
+
+#empty{
+    text-align: center;
 }

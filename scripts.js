@@ -1,4 +1,4 @@
-// #TODO task 3
+// TODO task 3
 var x = 15;
 
 function startup(){
@@ -54,6 +54,7 @@ function showArticles(data, x){
         var readLink = document.createElement('a');
         readLink.setAttribute('href', data[i]['url']);
         readLink.setAttribute('target', '_blank');
+        readLink.setAttribute('class', 'button');
 
         // add article to site
         readLink.appendChild(readBut);
@@ -74,6 +75,7 @@ function addOrRemove(id){
     if(savedArticles.includes(id)){
         var removeFromLib = document.createElement('button');
         removeFromLib.setAttribute('class', 'remove-from-library');
+        removeFromLib.setAttribute('id', 'but-' + id);
 
         var onclickFunc = 'removeFromLibrary(' + id + ')';
         removeFromLib.setAttribute('onclick', onclickFunc);
@@ -84,8 +86,9 @@ function addOrRemove(id){
     else{
         var addToLib = document.createElement('button');
         addToLib.setAttribute('class', 'add-to-library');
+        addToLib.setAttribute('id', 'but-' + id);
 
-        var onclickFunc = 'saveToLibrary(' + id + ')';
+        var onclickFunc = 'addToLibrary(' + id + ')';
         addToLib.setAttribute('onclick', onclickFunc);
         addToLib.innerHTML = "Add to library";
 
@@ -103,39 +106,4 @@ function showNumberOfArticles(){
     }).catch(function (err){
         console.warn('Error.', err);
     });
-}
-
-function saveToLibrary(id){
-    var saved = false;
-
-    if (localStorage.getItem("saved") === null) { // local storage is empty
-        var savedArticles = [id];
-        localStorage.setItem("saved", JSON.stringify(savedArticles));
-    }
-    else {
-        var savedArticles = JSON.parse(localStorage.getItem("saved"));
-
-        if(savedArticles.includes(id)){
-            console.log("Error, your library has this element.");
-            return false; // continue only if item is saved
-        }
-        else{
-            savedArticles.push(id);
-            localStorage.setItem("saved", JSON.stringify(savedArticles));
-        }
-    }
-}
-
-function removeFromLibrary(id){
-    var savedArticles = JSON.parse(localStorage.getItem("saved"));
-    console.log(savedArticles);
-
-    const index = savedArticles.indexOf(id);
-    if(index == -1){
-        console.log("Error, your library doesn't have this element.");
-    }
-    else{
-        savedArticles.splice(index, 1);
-        localStorage.setItem("saved", JSON.stringify(savedArticles));
-    }
 }
