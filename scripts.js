@@ -29,7 +29,7 @@ function showArticles(data, x){
         // informations about article
         var article = document.createElement('div');
         article.setAttribute('class', 'article-panel');
-        article.setAttribute('id', 'a' + data[i]['id']);
+        article.setAttribute('id', 'art-' + data[i]['id']);
         
         var header = document.createElement('div');
         header.setAttribute('class', 'article-header');
@@ -77,7 +77,7 @@ function addOrRemove(id){
         removeFromLib.setAttribute('class', 'remove-from-library');
         removeFromLib.setAttribute('id', 'but-' + id);
 
-        var onclickFunc = 'removeFromLibrary(' + id + ')';
+        var onclickFunc = 'removeFromLibrary(' + id + ', 0)';
         removeFromLib.setAttribute('onclick', onclickFunc);
         removeFromLib.innerHTML = "Remove from library";
         

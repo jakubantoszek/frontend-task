@@ -10,7 +10,7 @@
     <script src="library.js"></script>
 </head>
 
-<body onload="library_startup()">
+<body onload="libraryStartup()">
     <header>
         <div class="site">
             <a href="index.html">Articles</a>
@@ -23,6 +23,15 @@
         <div id="total"></div>
     </header>
     
+    <div id="sort-by">
+        Sort by
+        <select name="sorting" id="sorting" onchange="sortArticles()">
+            <option value="pd">Published at (descending)</option>
+            <option value="pa">Published at (ascending)</option>
+            <option value="td">Title (descending)</option>
+            <option value="ta">Title (ascending)</option>
+          </select>
+    </div>
     <div id="list-of-articles">
         
     </div>

@@ -82,3 +82,14 @@ a.button{
 #empty{
     text-align: center;
 }
+
+#sort-by{
+    margin-left: 70px;
+    margin-top: 20px;
+    font-size: 120%;
+}
+
+select#sorting{
+    margin-left: 10px;
+    height: 25px;
+}
