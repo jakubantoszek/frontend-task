@@ -3,7 +3,7 @@ var x = 15;
 
 function startup(){
     getListOfArticles();
-    showNoOfArticles();
+    showNumberOfArticles();
 }
 
 function getListOfArticles(){
@@ -15,7 +15,7 @@ function getListOfArticles(){
         return response.json();
     }).then(function (data){
         showArticles(data, x);
-        showNoOfArticles();    
+        showNumberOfArticles();    
     }).catch(function (err) {
         console.warn('Error.', err);
     });
@@ -29,6 +29,7 @@ function showArticles(data, x){
         // informations about article
         var article = document.createElement('div');
         article.setAttribute('class', 'article-panel');
+        article.setAttribute('id', 'a' + data[i]['id']);
         
         var header = document.createElement('div');
         header.setAttribute('class', 'article-header');
@@ -54,16 +55,10 @@ function showArticles(data, x){
         readLink.setAttribute('href', data[i]['url']);
         readLink.setAttribute('target', '_blank');
 
-        var addToLib = document.createElement('button');
-        addToLib.setAttribute('class', 'add-to-library');
-        var onclickFunc = 'saveToLibrary(' + data[i]['id'] + ')';
-        addToLib.setAttribute('onclick', onclickFunc);
-        addToLib.innerHTML = "Add to library";
-
-        // add articles to site
+        // add article to site
         readLink.appendChild(readBut);
         buttons.appendChild(readLink);
-        buttons.appendChild(addToLib);
+        buttons.appendChild(addOrRemove(data[i]['id']));
 
         article.append(header);
         article.append(info);
@@ -73,7 +68,32 @@ function showArticles(data, x){
     }
 }
 
-function showNoOfArticles(){
+function addOrRemove(id){
+    var savedArticles = JSON.parse(localStorage.getItem("saved"));
+    
+    if(savedArticles.includes(id)){
+        var removeFromLib = document.createElement('button');
+        removeFromLib.setAttribute('class', 'remove-from-library');
+
+        var onclickFunc = 'removeFromLibrary(' + id + ')';
+        removeFromLib.setAttribute('onclick', onclickFunc);
+        removeFromLib.innerHTML = "Remove from library";
+        
+        return removeFromLib;
+    }
+    else{
+        var addToLib = document.createElement('button');
+        addToLib.setAttribute('class', 'add-to-library');
+
+        var onclickFunc = 'saveToLibrary(' + id + ')';
+        addToLib.setAttribute('onclick', onclickFunc);
+        addToLib.innerHTML = "Add to library";
+
+        return addToLib;
+    }
+}
+
+function showNumberOfArticles(){
     var articlesHeader = document.getElementById('total');
 
     fetch('https://api.spaceflightnewsapi.net/v3/articles/count').then(function (response){
@@ -86,15 +106,36 @@ function showNoOfArticles(){
 }
 
 function saveToLibrary(id){
-    if (localStorage.getItem("saved") === null) {
+    var saved = false;
+
+    if (localStorage.getItem("saved") === null) { // local storage is empty
         var savedArticles = [id];
         localStorage.setItem("saved", JSON.stringify(savedArticles));
-        console.log(savedArticles);
+    }
+    else {
+        var savedArticles = JSON.parse(localStorage.getItem("saved"));
+
+        if(savedArticles.includes(id)){
+            console.log("Error, your library has this element.");
+            return false; // continue only if item is saved
+        }
+        else{
+            savedArticles.push(id);
+            localStorage.setItem("saved", JSON.stringify(savedArticles));
+        }
+    }
+}
+
+function removeFromLibrary(id){
+    var savedArticles = JSON.parse(localStorage.getItem("saved"));
+    console.log(savedArticles);
+
+    const index = savedArticles.indexOf(id);
+    if(index == -1){
+        console.log("Error, your library doesn't have this element.");
     }
     else{
-        var savedArticles = JSON.parse(localStorage.getItem("saved"));
-        savedArticles.push(id);
+        savedArticles.splice(index, 1);
         localStorage.setItem("saved", JSON.stringify(savedArticles));
-        console.log(savedArticles);
     }
 }

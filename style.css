@@ -5,7 +5,7 @@ body{
 header{
     width:100%;
     background-color:deepskyblue;
-    color:rgb(255, 253, 253);
+    color:rgb(253, 253, 253);
     height: 10px;
     padding-top: 10px;
     padding-bottom: 20px;
@@ -18,7 +18,7 @@ header{
 
 a{
     text-decoration: none;
-    color:rgb(255, 253, 253);
+    color:rgb(253, 253, 253);
 }
 
 #total{
@@ -67,4 +67,11 @@ a{
 .add-to-library{
     height: 30px;
     cursor: pointer;
+}
+
+.remove-from-library{
+    height: 30px;
+    cursor: pointer;
+    background-color: rgb(243, 82, 82);
+    color: white;
 }
