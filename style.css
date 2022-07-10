@@ -1,5 +1,6 @@
 body{
     margin:0;
+    background-color: azure;
 }
 
 header{
@@ -92,4 +93,108 @@ a.button{
 select#sorting{
     margin-left: 10px;
     height: 25px;
+}
+
+#num-form{
+    margin-left: 70px;
+    margin-top: 20px;
+    font-size: 120%;
+    padding-bottom: 20px;
+}
+
+input#num{
+    margin-left: 8px;
+    height: 20px;
+}
+
+#num-input{
+    float: left;
+}
+
+button#num-of-articles{
+    float: left;
+    margin-left: 10px;
+}
+
+@media (max-width:550px) and (min-width:470px){
+    input#num{
+        width:120px;
+    }
+
+    #num-form{
+        font-size: 110%;
+        margin-left: 55px;
+    }
+}
+
+@media (max-width:470px) and (min-width:395px){
+    #list-of-articles{
+        margin: 20px 40px;
+    }
+
+    input#num{
+        width:60px;
+    }
+
+    #num-form{
+        font-size: 110%;
+        margin-left: 10%;
+    }
+}
+
+@media (max-width:395px) and (min-width:340px){
+    #list-of-articles{
+        margin: 20px 20px;
+    }
+
+    input#num{
+        width:60px;
+        margin-left: 4px;
+    }
+
+    #num-form{
+        font-size: 100%;
+        margin-left: 6%;
+    }
+
+    button#num-of-articles{
+        margin-left: 5px;
+    }
+
+    #sort-by{
+        margin-left: 20px;
+    }
+}
+
+@media (max-width:340px){
+
+    .remove-from-library{
+        margin-top:10px;
+    }
+
+    #list-of-articles{
+        margin: 20px 20px;
+    }
+
+    input#num{
+        width:60px;
+        margin-left: 4px;
+    }
+
+    #num-form{
+        font-size: 90%;
+        margin-left: 2%;
+    }
+
+    button#num-of-articles{
+        margin-left: 5px;
+    }
+
+    #sort-by{
+        margin-left: 20px;
+    }
+
+    #total{
+        font-size: 90%;
+    }
 }

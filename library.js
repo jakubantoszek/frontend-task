@@ -64,7 +64,12 @@ function showArticle(data, list){
 
     var summary = document.createElement('div');
     summary.setAttribute('class', 'summary');
-    summary.innerHTML = data['summary'];
+
+    var sum = data['summary'];
+    if(sum.length > 200){
+        sum = sum.substring(0, 197) + "...";
+    }
+    summary.innerHTML = sum;
 
     // create buttons
     var buttons = document.createElement('div');
@@ -111,7 +116,7 @@ function addButton(id){
 
     var onclickFunc = 'removeFromLibrary(' + id + ', 1)';
     removeFromLib.setAttribute('onclick', onclickFunc);
-    removeFromLib.innerHTML = "Remove from library";
+    removeFromLib.innerHTML = "Remove from Library";
         
     return removeFromLib;
 }
@@ -140,7 +145,7 @@ function addToLibrary(id){
     // change button
     var saveButton = document.getElementById("but-" + id);
     saveButton.setAttribute('class', 'remove-from-library');
-    saveButton.innerHTML = "Remove from library";
+    saveButton.innerHTML = "Remove from Library";
 
     var onclickFunc = 'removeFromLibrary(' + id + ')';
     saveButton.setAttribute('onclick', onclickFunc);
@@ -161,16 +166,16 @@ function removeFromLibrary(id, lib){
         deleteFromDataArray(id);
 
         if(lib == 0){
-            // change button
+            // change button (from index.html)
             var removeButton = document.getElementById("but-" + id);
             removeButton.setAttribute('class', 'add-to-library');
-            removeButton.innerHTML = "Add to library";
+            removeButton.innerHTML = "Add to Library";
 
             var onclickFunc = 'addToLibrary(' + id + ')';
             removeButton.setAttribute('onclick', onclickFunc);
         }
         else{
-            // delete element
+            // delete element (from library.html)
             var removedArticle = document.getElementById("art-" + id);
             document.getElementById('list-of-articles').removeChild(removedArticle);
             
