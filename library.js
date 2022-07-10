@@ -1,18 +1,16 @@
 var dataArray = [];
 
 function libraryStartup(){
-    dataArray = [];
     fetchData();
+    dataArray = dataArray.sort(sortPD); // default sorting
     showLibrary();
-
-    console.log(dataArray.length);
 }
 
 async function fetchData(){
     var savedArticles = JSON.parse(localStorage.getItem("saved"));
-    var requests = [];
 
     if(savedArticles.length != 0){
+        // fetch data synchronously
         const request = new XMLHttpRequest();
 
         request.addEventListener("load", e => {
@@ -24,14 +22,12 @@ async function fetchData(){
         request.addEventListener("error", e => {
             alert("Error");
         });
-
-        request.open("GET", 'https://api.spaceflightnewsapi.net/v3/articles/' + 13000, false);
-        request.send();
+        
+        savedArticles.forEach(id => {
+            request.open("GET", 'https://api.spaceflightnewsapi.net/v3/articles/' + id, false);
+            request.send();
+        });
     }
-}
-
-async function addToArray(data){
-    dataArray.push(data['id']);
 }
 
 function showLibrary(){
@@ -39,7 +35,7 @@ function showLibrary(){
     list.innerHTML = "";
     
 
-    if(dataArray.length < 10){
+    if(dataArray.length == 0){
         var empty = document.createElement('div');
         empty.setAttribute('id', 'empty');
         empty.innerHTML = "You didn't have any articles in the library.";
@@ -154,16 +150,16 @@ function addToLibrary(id){
 function removeFromLibrary(id, lib){
     // lib = 0 - Articles site, lib = 1 - Library site
     var savedArticles = JSON.parse(localStorage.getItem("saved"));
-    console.log(savedArticles);
 
     const index = savedArticles.indexOf(id);
     if(index == -1){
         console.log("Error, your library doesn't have this element.");
     }
     else{
-        // add to library
+        // remove from library
         savedArticles.splice(index, 1);
         localStorage.setItem("saved", JSON.stringify(savedArticles));
+        deleteFromDataArray(id);
 
         if(lib == 0){
             // change button
@@ -190,13 +186,50 @@ function removeFromLibrary(id, lib){
     }
 }
 
+function deleteFromDataArray(id){
+    for(var i = 0; i < dataArray.length; i++){
+        if(dataArray[i]['id'] == id){
+            dataArray.splice(i, 1);
+            return;
+        }
+    }
+}
+
 function sortArticles(){
     var choice = document.getElementById('sorting').value;
     switch(choice){
+        case 'pd':
+            dataArray = dataArray.sort(sortPD);
+            break;
         case 'pa':
+            dataArray = dataArray.sort(sortPA);
+            break;
+        case 'td':
+            dataArray = dataArray.sort(sortTD);
+            break;
+        case 'ta':
+            dataArray = dataArray.sort(sortTA);
             break;
         default:
             console.log("Sorry, an error occurs");
-            break;
+            return;
     }
+
+    showLibrary();
+}
+
+function sortPA(a, b){
+    return a['publishedAt'].localeCompare(b['publishedAt']);
+}
+
+function sortPD(a, b){
+    return b['publishedAt'].localeCompare(a['publishedAt']);
+}
+
+function sortTA(a, b){
+    return a['title'].localeCompare(b['title']);
+}
+
+function sortTD(a, b){
+    return b['title'].localeCompare(a['title']);
 }
