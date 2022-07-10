@@ -116,10 +116,14 @@ button#num-of-articles{
     margin-left: 10px;
 }
 
-@media (max-width:550px) and (min-width:470px){
-    input#num{
-        width:120px;
-    }
+#total_resp{
+    display: none;
+    float: right;
+    margin-right: 4%;
+}
+
+@media (max-width:550px){
+    input#num{ width:120px; }
 
     #num-form{
         font-size: 110%;
@@ -127,74 +131,78 @@ button#num-of-articles{
     }
 }
 
-@media (max-width:470px) and (min-width:395px){
-    #list-of-articles{
-        margin: 20px 40px;
-    }
+@media (max-width:470px){
+    #list-of-articles{ margin: 20px 40px; }
 
-    input#num{
-        width:60px;
-    }
+    input#num{ width:60px; }
 
-    #num-form{
-        font-size: 110%;
-        margin-left: 10%;
-    }
+    #num-form{ margin-left: 10%; }
 }
 
-@media (max-width:395px) and (min-width:340px){
-    #list-of-articles{
-        margin: 20px 20px;
-    }
+@media (max-width:395px){
+    #list-of-articles{ margin: 20px 20px; }
 
-    input#num{
-        width:60px;
-        margin-left: 4px;
-    }
+    .article-header{ font-size: 110%; }
+
+    .summary{ font-size:95%; }
+
+    input#num{ margin-left: 4px; }
 
     #num-form{
         font-size: 100%;
         margin-left: 6%;
     }
 
-    button#num-of-articles{
-        margin-left: 5px;
-    }
+    button#num-of-articles{ margin-left: 5px; }
 
-    #sort-by{
-        margin-left: 20px;
-    }
+    #sort-by{  margin-left: 20px; }
+}
+
+@media (max-width: 353px){
+    .remove-from-library{ margin-top:10px; }
 }
 
 @media (max-width:340px){
 
-    .remove-from-library{
-        margin-top:10px;
-    }
-
-    #list-of-articles{
-        margin: 20px 20px;
-    }
-
-    input#num{
-        width:60px;
-        margin-left: 4px;
-    }
+    input#num{ width:60px; }
 
     #num-form{
         font-size: 90%;
         margin-left: 2%;
     }
 
+    #total{ font-size: 90%; }
+
+    .article-header{ font-size: 100%; }
+
+    .info{ font-size: 80%; }
+
+    .summary{ font-size:90%; }
+}
+
+@media(max-width: 310px){
+
+    .add-to-library{ margin-top:10px; }
+
+    #num-form{
+        font-size: 80%;
+        margin-left: 2%;
+        padding-bottom: 35px;
+    }
+
+    #total_resp{ display: block; }
+    
+    #total{ display: none; }
+
+    select#sorting{
+        margin-left: 0;
+        margin-top: 10px;
+        height: 25px;
+    }
+}
+
+@media(max-width: 280px){
     button#num-of-articles{
-        margin-left: 5px;
-    }
-
-    #sort-by{
-        margin-left: 20px;
-    }
-
-    #total{
-        font-size: 90%;
+        margin-top:5px;
     }
 }

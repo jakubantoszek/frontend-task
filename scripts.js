@@ -132,13 +132,15 @@ function addOrRemove(id){
 }
 
 function showNumberOfArticles(){
-    var articlesHeader = document.getElementById('total');
+    var total = document.getElementById('total');
+    var totalResp = document.getElementById('total_resp');
 
     fetch('https://api.spaceflightnewsapi.net/v3/articles/count').then(function (response){
         return response.json();
     }).then(function (data){
         var fetched = Number(limit) + Number(start);
-        articlesHeader.innerHTML = "Fetched articles: " + fetched + "/" + data;
+        total.innerHTML = "Fetched articles: " + fetched + "/" + data;
+        totalResp.innerHTML = fetched + "/" + data;
     }).catch(function (err){
         console.warn('Error.', err);
     });
