@@ -166,7 +166,7 @@ function removeFromLibrary(id, lib){
         deleteFromDataArray(id);
 
         if(lib == 0){
-            // change button (from index.html)
+            // change button
             var removeButton = document.getElementById("but-" + id);
             removeButton.setAttribute('class', 'add-to-library');
             removeButton.innerHTML = "Add to Library";
@@ -175,7 +175,7 @@ function removeFromLibrary(id, lib){
             removeButton.setAttribute('onclick', onclickFunc);
         }
         else{
-            // delete element (from library.html)
+            // delete element
             var removedArticle = document.getElementById("art-" + id);
             document.getElementById('list-of-articles').removeChild(removedArticle);
             
