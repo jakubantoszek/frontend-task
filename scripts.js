@@ -10,15 +10,15 @@ function startup(){
 function getListOfArticles(){
     var val = document.getElementById('num').value;
     start = 0;
-    console.log(window.innerWidth)
 
-    if(val != null && val != ""){
+    if(val != null && val != ""){ // input isn't empty
         limit = Math.max(5, val);
     
         var list = document.getElementById('list-of-articles');
         list.innerHTML = "";
     }
 
+    // fetch recent articles
     fetch('https://api.spaceflightnewsapi.net/v3/articles?_limit=' + limit).then(function (response) {
         return response.json();
     }).then(function (data){
@@ -32,6 +32,8 @@ function getListOfArticles(){
 
 function infiniteScroll(){
     start = Number(start) + Number(limit); // variables as numbers
+
+    // fetch following articles
     fetch('https://api.spaceflightnewsapi.net/v3/articles?_limit=' + limit + '&_start=' + start).then(function (response) {
         return response.json();
     }).then(function (data){
@@ -42,6 +44,7 @@ function infiniteScroll(){
     });
 }
 
+// call infiniteScroll() if you scroll to bottom of the page
 window.addEventListener('scroll', function() {
     if(timer !== null) 
         clearTimeout(timer);        
@@ -133,8 +136,9 @@ function addOrRemove(id){
 
 function showNumberOfArticles(){
     var total = document.getElementById('total');
-    var totalResp = document.getElementById('total_resp');
+    var totalResp = document.getElementById('total_resp'); // div for width < 310px
 
+    // count articles
     fetch('https://api.spaceflightnewsapi.net/v3/articles/count').then(function (response){
         return response.json();
     }).then(function (data){

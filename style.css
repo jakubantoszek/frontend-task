@@ -12,23 +12,18 @@ header{
     padding-bottom: 20px;
 }
 
-.site{
-    float: left;
-    margin-left: 4%;
-}
-
 a{
     text-decoration: none;
     color:rgb(253, 253, 253);
 }
 
-#total{
-    float: right;
-    margin-right: 4%;
+a.button{
+    margin-right: 30px;
 }
 
-#list-of-articles{
-    margin: 20px 70px;
+.site{
+    float: left;
+    margin-left: 4%;
 }
 
 .article-panel{
@@ -76,12 +71,17 @@ a{
     color: white;
 }
 
-a.button{
-    margin-right: 30px;
-}
-
 #empty{
     text-align: center;
+}
+
+#total{
+    float: right;
+    margin-right: 4%;
+}
+
+#list-of-articles{
+    margin: 20px 70px;
 }
 
 #sort-by{

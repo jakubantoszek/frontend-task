@@ -33,9 +33,8 @@ async function fetchData(){
 function showLibrary(){
     var list = document.getElementById('list-of-articles');
     list.innerHTML = "";
-    
 
-    if(dataArray.length == 0){
+    if(dataArray.length == 0){ // no articles are saved
         var empty = document.createElement('div');
         empty.setAttribute('id', 'empty');
         empty.innerHTML = "You didn't have any articles in the library.";
@@ -43,8 +42,8 @@ function showLibrary(){
         document.body.appendChild(empty);
     }
     else dataArray.forEach(element=> {
-            showArticle(element, list);
-        });
+        showArticle(element, list);
+    });
     
 }
 
@@ -98,6 +97,7 @@ function showArticle(data, list){
 function createObjectsArray(){
     var savedArticles = JSON.parse(localStorage.getItem("saved"));
     
+    // fetch article with given id
     savedArticles.forEach(id=> {
         fetch('https://api.spaceflightnewsapi.net/v3/articles/' + id).then(function (response) {
             return response.json();
@@ -133,7 +133,7 @@ function addToLibrary(id){
         var savedArticles = JSON.parse(localStorage.getItem("saved"));
 
         if(savedArticles.includes(id)){
-            console.log("Error, your library has this element.");
+            alert("Error, your library has this element.");
             return false; // continue only if item is saved
         }
         else{
@@ -156,9 +156,8 @@ function removeFromLibrary(id, lib){
     var savedArticles = JSON.parse(localStorage.getItem("saved"));
 
     const index = savedArticles.indexOf(id);
-    if(index == -1){
-        console.log("Error, your library doesn't have this element.");
-    }
+    if(index == -1)
+        alert("Error, your library doesn't have this element.");
     else{
         // remove from library
         savedArticles.splice(index, 1);
@@ -191,6 +190,7 @@ function removeFromLibrary(id, lib){
 }
 
 function deleteFromDataArray(id){
+    // delete element with given id fron data array
     for(var i = 0; i < dataArray.length; i++){
         if(dataArray[i]['id'] == id){
             dataArray.splice(i, 1);
@@ -201,6 +201,7 @@ function deleteFromDataArray(id){
 
 function sortArticles(){
     var choice = document.getElementById('sorting').value;
+    
     switch(choice){
         case 'pd':
             dataArray = dataArray.sort(sortPD);
@@ -215,7 +216,7 @@ function sortArticles(){
             dataArray = dataArray.sort(sortTA);
             break;
         default:
-            console.log("Sorry, an error occurs");
+            alert("Sorry, an error occurs");
             return;
     }
 
