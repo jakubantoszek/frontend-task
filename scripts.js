@@ -1,5 +1,6 @@
-// TODO task 3
 var x = 15;
+var start = 0;
+var timer = null;
 
 function startup(){
     getListOfArticles();
@@ -8,8 +9,16 @@ function startup(){
 
 function getListOfArticles(){
     var val = document.getElementById('num').value;
-    if(val != null && val != "")
-        x = val;
+    start = 0;
+
+    if(val != null && val != ""){
+        if(val >= 5)
+            x = val;
+        else x = 5;
+
+        var list = document.getElementById('list-of-articles');
+        list.innerHTML = "";
+    }
 
     fetch('https://api.spaceflightnewsapi.net/v3/articles?_limit=' + x).then(function (response) {
         return response.json();
@@ -19,12 +28,35 @@ function getListOfArticles(){
     }).catch(function (err) {
         console.warn('Error.', err);
     });
+
+    showNumberOfArticles();
 }
+
+function infiniteScroll(){
+    start = +start + +x; // variables as numbers
+    fetch('https://api.spaceflightnewsapi.net/v3/articles?_limit=' + x + '&_start=' + start).then(function (response) {
+        return response.json();
+    }).then(function (data){
+        showArticles(data, x);
+        showNumberOfArticles();  
+    }).catch(function (err) {
+        console.warn('Error.', err);
+    });
+}
+
+window.addEventListener('scroll', function() {
+    if(timer !== null) 
+        clearTimeout(timer);        
+    timer = setTimeout(function() {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
+            infiniteScroll();
+    }, 100);
+}, false);
+
 
 function showArticles(data, x){
     var list = document.getElementById('list-of-articles');
-    list.innerHTML = "";
-
+    
     for(var i = 0; i < x; i++){
         // informations about article
         var article = document.createElement('div');
@@ -102,7 +134,8 @@ function showNumberOfArticles(){
     fetch('https://api.spaceflightnewsapi.net/v3/articles/count').then(function (response){
         return response.json();
     }).then(function (data){
-        articlesHeader.innerHTML = "Fetched articles: " + x + "/" + data;
+        var fetched = +x + +start;
+        articlesHeader.innerHTML = "Fetched articles: " + fetched + "/" + data;
     }).catch(function (err){
         console.warn('Error.', err);
     });

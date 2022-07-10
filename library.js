@@ -76,7 +76,6 @@ function showArticle(data, list){
 
     var readLink = document.createElement('a');
     readLink.setAttribute('href', data['url']);
-    readLink.setAttribute('target', '_blank');
     readLink.setAttribute('class', 'button');
 
     // add article to site
