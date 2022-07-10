@@ -1,6 +1,7 @@
 var limit = 15;
 var start = 0;
 var timer = null;
+var countArticles = 0;
 
 function startup(){
     getListOfArticles();
@@ -12,8 +13,16 @@ function getListOfArticles(){
     start = 0;
 
     if(val != null && val != ""){ // input isn't empty
-        limit = Math.max(5, val);
-    
+        if(countArticles != 0 && val > countArticles){
+            alert("Your typed number is greater than total number of articles");
+            return;
+        }
+        else if(val < 5){
+            alert("You can't put number lower than 5");
+            return;
+        }
+        
+        limit = val;
         var list = document.getElementById('list-of-articles');
         list.innerHTML = "";
     }
@@ -32,6 +41,8 @@ function getListOfArticles(){
 
 function infiniteScroll(){
     start = Number(start) + Number(limit); // variables as numbers
+    if(countArticles != 0 && Number(start) + Number(limit) > countArticles)
+        return; // end of articles
 
     // fetch following articles
     fetch('https://api.spaceflightnewsapi.net/v3/articles?_limit=' + limit + '&_start=' + start).then(function (response) {
@@ -51,7 +62,7 @@ window.addEventListener('scroll', function() {
     timer = setTimeout(function() {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
             infiniteScroll();
-    }, 100);
+    }, 50);
 }, false);
 
 
@@ -142,6 +153,7 @@ function showNumberOfArticles(){
     fetch('https://api.spaceflightnewsapi.net/v3/articles/count').then(function (response){
         return response.json();
     }).then(function (data){
+        countArticles = data;
         var fetched = Number(limit) + Number(start);
         total.innerHTML = "Fetched articles: " + fetched + "/" + data;
         totalResp.innerHTML = fetched + "/" + data;

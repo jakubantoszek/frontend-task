@@ -134,7 +134,7 @@ function addToLibrary(id){
 
         if(savedArticles.includes(id)){
             alert("Error, your library has this element.");
-            return false; // continue only if item is saved
+            return; // continue only if item is saved
         }
         else{
             savedArticles.push(id);
@@ -147,13 +147,14 @@ function addToLibrary(id){
     saveButton.setAttribute('class', 'remove-from-library');
     saveButton.innerHTML = "Remove from Library";
 
-    var onclickFunc = 'removeFromLibrary(' + id + ')';
+    var onclickFunc = 'removeFromLibrary(' + id + ', 0)';
     saveButton.setAttribute('onclick', onclickFunc);
 }
 
 function removeFromLibrary(id, lib){
     // lib = 0 - Articles site, lib = 1 - Library site
     var savedArticles = JSON.parse(localStorage.getItem("saved"));
+    console.log(lib);
 
     const index = savedArticles.indexOf(id);
     if(index == -1)
